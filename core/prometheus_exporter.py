@@ -68,8 +68,8 @@ class CustomSonarExporter:
                 yield gauge
 
 if __name__ == "__main__":
-    logging.info("Starting service on port 9120.")
     logging.basicConfig(level=logging.INFO)
+    logging.info("Starting service on port 9120. Loading first batch...")
 
     custom_exporter = CustomSonarExporter(update_interval=60)  # Update cache every 60 seconds.
     prom.REGISTRY.register(custom_exporter)
