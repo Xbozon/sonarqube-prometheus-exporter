@@ -12,13 +12,18 @@ class SonarExporter:
         self.user = user
         self.password = password
         self.base_url = CONF.sonar_url
+        self.request_timeout = CONF.request_timeout
 
     def _request(self, endpoint):
-        req = requests.get("{}/{}".format(self.base_url, endpoint), auth=(self.user, self.password))
-        if req.status_code != 200:
-            return req.status_code
-        else:
+        try:
+            req = requests.get("{}/{}".format(self.base_url, endpoint),
+                               auth=(self.user, self.password),
+                               timeout=self.request_timeout)
+            req.raise_for_status()
             return req.json()
+        except Exception as e:
+            logging.exception("Timeout during request to endpoint '%s': %s", endpoint, e)
+            raise
 
     def get_all_projects(self):
         return self._request(endpoint='api/components/search_projects?filter=tags=sonarqube-exporter')

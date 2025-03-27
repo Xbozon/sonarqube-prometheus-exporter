@@ -23,6 +23,11 @@ class Config:
     def supported_keys(self):
         return SUPPORTED_KEYS
 
+    @property
+    def request_timeout(self):
+        return REQUEST_TIMEOUT
+
+REQUEST_TIMEOUT = 60 * 10
 SUPPORTED_KEYS = [
     {
         "domain" : "Reliability",
