@@ -21,6 +21,7 @@ class CustomSonarExporter:
     def update_cache(self):
         """Background loop that periodically updates the cache."""
         while True:
+            logging.info("Loading SonarQube metric update.")
             try:
                 projects = get_all_projects_with_metrics()
                 with self.lock:
