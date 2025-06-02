@@ -144,12 +144,14 @@ def get_all_projects_with_metrics():
     client = SonarExporter(CONF.sonar_user, CONF.sonar_password)
     all_projects = client.get_all_projects()
 
-    metrics_keys = "code_smells,bugs,vulnerabilities"
+    metrics_keys = "code_smells,bugs,vulnerabilities,coverage,ncloc"
 
     metrics = []
     for key, description in [("code_smells", "Code Smells"),
                              ("bugs", "Bugs"),
-                             ("vulnerabilities", "Vulnerabilities")]:
+                             ("vulnerabilities", "Vulnerabilities"),
+                             ("coverage", "Coverage"),
+                             ("ncloc", "Lines of Code")]:
         m = Metric()
         m.key = key
         m.description = description
